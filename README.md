@@ -7,6 +7,20 @@
 
 ---
 
+## 핵심 시각화
+
+### 마케팅 성과 대시보드
+
+![Starbucks marketing dashboard](./docs/images/dashboard-overview.png)
+
+### 메뉴 영양 정보 대시보드
+
+![Starbucks menu nutrition dashboard](./docs/images/menu-nutrition-dashboard.png)
+
+### 추천 메뉴판
+
+![Starbucks recommendation dashboard](./docs/images/menu-recommendation-dashboard.png)
+
 ## 목적
 
 - **반정형 데이터 전처리**: CSV 내 문자열로 저장된 dict/JSON 유사 데이터 → Pandas DataFrame 컬럼 확장
