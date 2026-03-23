@@ -1,0 +1,15 @@
+# 16조 스타벅스 – 프로모션·고객 분석
+# 설치: pip install -r requirements.txt
+
+pandas>=1.3.0
+numpy>=1.21.0
+jupyter>=1.0.0
+notebook>=6.4.0
+
+# 01_데이터_전처리, 02_데이터_조인, 03_EDA_이상치_분석에서 사용
+matplotlib>=3.4.0
+seaborn>=0.11.0
+scipy>=1.7.0
+scikit-learn>=1.0.0
+
+# Tableau는 별도 설치: https://www.tableau.com/

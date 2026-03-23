@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+venv/
+.venv/
+env/
+
+# Raw and processed datasets are not committed.
+data/*.csv
+data/*.xlsx
+data/전처리_완료_데이터셋/
+
+.DS_Store
+Thumbs.db
