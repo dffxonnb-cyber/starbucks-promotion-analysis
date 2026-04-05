@@ -2,6 +2,38 @@
 
 반정형 고객 이벤트 데이터를 분석 가능한 구조로 바꾸고, 고객·오퍼·이벤트를 하나의 테이블로 통합한 뒤 `프로모션 성과 해석 -> 고객/채널 인사이트 -> 추천 후보 생성 -> Tableau 대시보드`까지 연결한 프로젝트입니다. 핵심은 "예쁜 대시보드"가 아니라 `마케팅 담당자가 무엇을 결정할 수 있는가`를 데이터 구조부터 다시 설계한 점입니다.
 
+## 10초 요약
+
+- 마케팅 담당자: 어떤 고객군에 어떤 오퍼를 어떤 채널로 먼저 보낼지 결정할 수 있습니다.
+- CRM/성과 담당자: 완료율, 반응률, 추천 후보를 한 화면에서 비교해 집행 우선순위를 정할 수 있습니다.
+- 협업자/리더: Kaggle 원본 데이터가 `의사결정용 고객-오퍼 테이블`로 바뀌는 과정을 README만 보고 빠르게 이해할 수 있습니다.
+
+## 바로 보는 결과
+
+### Tableau 대시보드 미리보기
+
+![Starbucks marketing dashboard](./docs/images/dashboard-overview.png)
+
+![Starbucks recommendation dashboard](./docs/images/menu-recommendation-dashboard.png)
+
+워크북은 [스벅_최종_통합본.twb](./스벅_최종_통합본.twb)에서 바로 확인할 수 있습니다.
+
+### 추천 결과 예시 카드
+
+| 고객군 | 추천 오퍼 | 우선 채널 | 담당자가 내릴 결정 |
+|------|------|------|------|
+| 모바일 반응이 높은 기존 고객 | BOGO / 할인형 오퍼 | Mobile | 즉시 전환을 노리는 단기 프로모션을 앱 푸시 중심으로 집행 |
+| 이메일 반응은 있으나 완료율이 낮은 고객 | 정보형 오퍼 | Email | 혜택보다 설명형 메시지를 먼저 보내고 후속 클릭률을 확인 |
+| 여러 오퍼를 봤지만 완료 이력이 적은 고객 | 낮은 진입장벽의 할인형 오퍼 | Web + Email | 과한 혜택 남발 대신 재참여 테스트 캠페인부터 운영 |
+
+### 고객군별 액션 시나리오
+
+| 고객군 | 문제 해석 | 액션 시나리오 | 주로 볼 KPI |
+|------|------|------|------|
+| 고가치·고반응 고객 | 이미 반응하는 고객이라 과도한 할인보다 유지와 빈도 확대가 중요 | 리워드형 또는 BOGO 오퍼를 모바일 우선으로 집행해 재방문 주기를 짧게 유지 | 완료율, 재구매율, ARPU |
+| 잠재 반응 고객 | 채널 반응은 있으나 전환이 불안정 | 이메일/웹에서 메시지형 오퍼를 먼저 테스트하고, 반응 고객만 모바일 재타겟팅 | 오픈율, 클릭률, 완료율 |
+| 저반응·휴면 위험 고객 | 비용을 많이 써도 성과가 불확실 | 소액 할인 또는 재참여 캠페인을 저비용 채널로 제한 집행해 손실을 통제 | 재활성화율, 비용 대비 전환 |
+
 ## 빠른 판단
 
 | 항목 | 내용 |
@@ -30,17 +62,9 @@
 
 ## 핵심 시각화
 
-### 마케팅 성과 대시보드
-
-![Starbucks marketing dashboard](./docs/images/dashboard-overview.png)
-
 ### 메뉴 영양 정보 대시보드
 
 ![Starbucks menu nutrition dashboard](./docs/images/menu-nutrition-dashboard.png)
-
-### 추천 메뉴판
-
-![Starbucks recommendation dashboard](./docs/images/menu-recommendation-dashboard.png)
 
 ## 공개 저장소에서 확인할 수 있는 것
 
@@ -55,8 +79,20 @@
 - 로컬 배치 위치: `data/`
 - 생성 산출물: `portfolio_clean.csv`, `transcript_clean.csv`, `starbucks_merged.csv`, `offer_recommendations.csv`
 - 데이터셋 출처: [Starbucks Capstone 데이터셋](https://www.kaggle.com/code/candicezhao28/starbucks-data-analysis-customer-segmentation)
+- 저장소의 코드와 문서는 [MIT License](./LICENSE)를 따르며, 원본 데이터 사용 조건은 제공처 정책을 따릅니다.
 
-## 실행 순서
+## 한 줄 재현
+
+원본 노트북을 순서대로 직접 실행해도 되지만, GitHub 검토나 로컬 재현용으로는 아래 명령 하나로 전체 흐름을 실행할 수 있습니다.
+
+```bash
+python run_pipeline.py --clear-artifacts --stop-on-error
+```
+
+- `run_pipeline.py`는 원본 노트북을 수정하지 않고 실행본과 로그를 `artifacts/`에 저장합니다.
+- 자세한 실행 옵션과 구조 설명은 [AUTOMATION_GUIDE.md](./AUTOMATION_GUIDE.md)에서 확인할 수 있습니다.
+
+## 노트북 기준 실행 순서
 
 1. `pip install -r requirements.txt`
 2. `data/` 폴더에 CSV 3개 배치
@@ -71,7 +107,7 @@
 
 | 항목 | 내용 |
 |------|------|
-| Entry points | [analysis/notebooks/](./analysis/notebooks/), [스벅_최종_통합본.twb](./스벅_최종_통합본.twb) |
+| Entry points | [run_pipeline.py](./run_pipeline.py), [analysis/notebooks/](./analysis/notebooks/), [스벅_최종_통합본.twb](./스벅_최종_통합본.twb) |
 | 구조화 포인트 | 전처리, 조인, EDA, 추천을 노트북 단계별로 분리 |
 | 데이터 설계 | ERD 관점으로 `Profile < Transcript > Portfolio` 관계를 정리 |
 | 공개 기준 | 원본 CSV 제외, 코드/문서/워크북/이미지만 공개 |
@@ -81,3 +117,5 @@
 - 한 페이지 요약: [docs/한페이지_요약.md](./docs/한페이지_요약.md)
 - 재현성/검증 가이드: [docs/reproducibility_and_validation.md](./docs/reproducibility_and_validation.md)
 - 변경 이력: [CHANGELOG.md](./CHANGELOG.md)
+- 자동 실행 가이드: [AUTOMATION_GUIDE.md](./AUTOMATION_GUIDE.md)
+- 라이선스: [LICENSE](./LICENSE)
