@@ -17,6 +17,7 @@
 ![Starbucks recommendation dashboard](./docs/images/menu-recommendation-dashboard.png)
 
 워크북은 [스벅_최종_통합본.twb](./스벅_최종_통합본.twb)에서 바로 확인할 수 있습니다.
+브라우저에서 먼저 결과를 검토하려면 [docs/README.md](./docs/README.md)의 public review 경로를 따라가면 됩니다.
 
 ### 추천 결과 예시 카드
 
@@ -62,7 +63,7 @@
 
 ## 핵심 시각화
 
-### 메뉴 영양 정보 대시보드
+### 추천/채널 결과 대시보드
 
 ![Starbucks menu nutrition dashboard](./docs/images/menu-nutrition-dashboard.png)
 
@@ -72,6 +73,7 @@
 2. [analysis/notebooks/](./analysis/notebooks/)에서 `00 -> 01 -> 02 -> 03 -> 04` 흐름을 순서대로 확인합니다.
 3. [스벅_최종_통합본.twb](./스벅_최종_통합본.twb)로 Tableau 스토리텔링 구조를 확인합니다.
 4. [docs/한페이지_요약.md](./docs/한페이지_요약.md)에서 문제·접근·결과·한계를 짧게 검토합니다.
+5. [docs/README.md](./docs/README.md)에서 public review 순서와 핵심 이미지 자산을 한 번에 확인합니다.
 
 ## 데이터와 재현
 
@@ -115,6 +117,7 @@ python run_pipeline.py --clear-artifacts --stop-on-error
 ## 더 보기
 
 - 한 페이지 요약: [docs/한페이지_요약.md](./docs/한페이지_요약.md)
+- 문서 인덱스: [docs/README.md](./docs/README.md)
 - 재현성/검증 가이드: [docs/reproducibility_and_validation.md](./docs/reproducibility_and_validation.md)
 - 변경 이력: [CHANGELOG.md](./CHANGELOG.md)
 - 자동 실행 가이드: [AUTOMATION_GUIDE.md](./AUTOMATION_GUIDE.md)
