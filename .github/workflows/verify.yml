@@ -19,5 +19,8 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Compile pipeline entry points
+        run: python -m py_compile run_pipeline.py scripts/check_public_artifacts.py
+
       - name: Verify public review artifacts
         run: python scripts/check_public_artifacts.py
