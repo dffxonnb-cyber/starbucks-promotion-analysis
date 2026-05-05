@@ -1,5 +1,9 @@
 # Starbucks Promotion Analysis
 
+[![Verify](https://github.com/dffxonnb-cyber/starbucks-promotion-analysis/actions/workflows/verify.yml/badge.svg)](https://github.com/dffxonnb-cyber/starbucks-promotion-analysis/actions/workflows/verify.yml)
+[![AUC](https://img.shields.io/badge/AUC-0.8147-2563eb)](./docs/reproducibility_and_validation.md)
+[![Recall](https://img.shields.io/badge/Recall-0.8712-0f766e)](./docs/reproducibility_and_validation.md)
+
 > Customer promotion response analysis and offer completion prediction using Starbucks simulated marketing data.
 
 반정형 이벤트 데이터를 분석 가능한 고객-오퍼 테이블로 재구성하고, 고객군·채널·오퍼별 성과를 분석해 프로모션 집행 우선순위를 제안한 CRM 분석 프로젝트입니다.  
