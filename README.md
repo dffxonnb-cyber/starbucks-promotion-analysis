@@ -6,10 +6,29 @@
 
 > Customer promotion response analysis and offer completion prediction using Starbucks simulated marketing data.
 
-반정형 이벤트 데이터를 분석 가능한 고객-오퍼 테이블로 재구성하고, 고객군·채널·오퍼별 성과를 분석해 프로모션 집행 우선순위를 제안한 CRM 분석 프로젝트입니다.  
-핵심은 `데이터 구조화 → 성과 해석 → 오퍼 완료 예측 → 추천 후보 생성 → Tableau 대시보드`까지 연결해, 마케팅 담당자가 실제로 어떤 고객에게 어떤 오퍼를 어떤 채널로 보낼지 판단할 수 있도록 만든 점입니다.
+반정형 이벤트 데이터를 분석 가능한 고객-오퍼 테이블로 재구성하고, 고객군·채널·오퍼별 성과를 분석해 프로모션 집행 우선순위를 제안한 CRM 분석 프로젝트입니다. 핵심은 `데이터 구조화 → 성과 해석 → 오퍼 완료 예측 → 추천 후보 생성 → Tableau 대시보드`까지 연결해, 마케팅 담당자가 실제로 어떤 고객에게 어떤 오퍼를 어떤 채널로 보낼지 판단할 수 있도록 만든 점입니다.
 
 이 프로젝트는 4인 팀 프로젝트로 진행했으며, 저는 팀 리더로서 분석 방향 정리, 데이터 구조 설계, 역할 조율, 모델링 흐름 정리, Tableau 대시보드 스토리라인 구성을 주도했습니다.
+
+## 3-Minute Reviewer Path
+
+| Step | Open | What to check |
+| --- | --- | --- |
+| 1 | [One-page Summary](./docs/한페이지_요약.md) | 문제 정의, 접근 방식, 핵심 결과, 한계 |
+| 2 | [Dashboard Overview](./docs/images/dashboard-overview.png) | 캠페인 성과와 고객군 검토 화면 |
+| 3 | [Recommendation Dashboard](./docs/images/menu-recommendation-dashboard.png) | 고객-오퍼 추천 후보와 실행 우선순위 |
+| 4 | [Modeling Notebook](./analysis/notebooks/04_오퍼_추천_ML.ipynb) | AUC, Recall, Precision, F1, ranking metric |
+| 5 | [Reproducibility Guide](./docs/reproducibility_and_validation.md) | 시간 기반 split, 데이터 준비, 공개 검증 범위 |
+
+## My Contribution Snapshot
+
+| Contribution | Evidence |
+| --- | --- |
+| **Team leadership** | 4인 팀 프로젝트에서 분석 목적, 역할 분담, 발표/문서 흐름을 하나의 CRM 의사결정 구조로 정리 |
+| **Data structure design** | `Profile < Transcript > Portfolio` 관계를 기준으로 고객·이벤트·오퍼 데이터를 고객-오퍼 단위로 재구성 |
+| **Modeling direction** | 단순 정확도보다 캠페인 후보 누락을 줄이는 Recall과 Precision 균형을 함께 해석 |
+| **Dashboard storyline** | Tableau 화면을 단순 시각화가 아니라 고객군, 채널, 추천 후보를 함께 보는 판단 화면으로 구성 |
+| **Documentation** | README, one-page summary, validation guide, public review route를 정리해 팀 프로젝트를 공개 포트폴리오로 재구성 |
 
 ## Portfolio Summary
 
@@ -37,24 +56,9 @@
 | Recommendation | 완료 가능성이 높은 고객-오퍼 후보를 우선순위화 |
 | Dashboard | Tableau 화면에서 고객군, 채널, 추천 후보를 함께 검토 |
 
-## Team Leadership
-
-이 프로젝트는 4인 팀으로 진행했으며, 단순 분업보다 **분석 흐름을 하나의 의사결정 구조로 연결하는 것**에 집중했습니다.
-
-제가 맡은 역할은 다음과 같습니다.
-
-- 프로젝트 목적과 CRM 분석 방향 정리
-- Kaggle 원본 데이터 구조 파악 및 분석 가능한 테이블 설계 방향 제안
-- `Profile < Transcript > Portfolio` 관계를 기준으로 조인 구조 정리
-- 전처리, EDA, 모델링, Tableau 대시보드로 이어지는 분석 흐름 조율
-- 오퍼 완료 예측 모델의 평가 지표와 해석 방향 정리
-- 대시보드가 단순 시각화가 아니라 “마케팅 담당자의 판단 화면”이 되도록 스토리라인 구성
-- README와 문서에서 문제, 접근, 결과, 한계를 이해하기 쉽게 정리
-
 ## Data Problem
 
-원본 데이터는 바로 분석하기 어려운 형태였습니다.  
-특히 `channels`, `value`처럼 문자열 또는 딕셔너리 형태로 저장된 반정형 이벤트 정보가 포함되어 있어, 그대로는 고객별 오퍼 반응이나 완료 여부를 안정적으로 비교하기 어려웠습니다.
+원본 데이터는 바로 분석하기 어려운 형태였습니다. 특히 `channels`, `value`처럼 문자열 또는 딕셔너리 형태로 저장된 반정형 이벤트 정보가 포함되어 있어, 그대로는 고객별 오퍼 반응이나 완료 여부를 안정적으로 비교하기 어려웠습니다.
 
 이 프로젝트에서 해결해야 했던 데이터 문제는 다음과 같습니다.
 
@@ -118,8 +122,7 @@
 
 ## Modeling & Validation
 
-오퍼 완료 예측 모델은 단순히 높은 정확도를 목표로 하지 않았습니다.  
-프로모션에서는 완료 가능성이 높은 고객을 놓치지 않는 것이 중요하기 때문에, Recall과 Precision의 균형을 함께 확인했습니다.
+오퍼 완료 예측 모델은 단순히 높은 정확도를 목표로 하지 않았습니다. 프로모션에서는 완료 가능성이 높은 고객을 놓치지 않는 것이 중요하기 때문에, Recall과 Precision의 균형을 함께 확인했습니다.
 
 | Category | Metric | Meaning | Reference |
 |----------|--------|---------|-----------|
@@ -151,8 +154,7 @@
 
 ![Starbucks recommendation dashboard](./docs/images/menu-recommendation-dashboard.png)
 
-워크북은 [스벅_최종_통합본.twb](./스벅_최종_통합본.twb)에서 확인할 수 있습니다.  
-브라우저에서 먼저 결과를 검토하려면 [docs/README.md](./docs/README.md)의 public review 경로를 따라가면 됩니다.
+워크북은 [스벅_최종_통합본.twb](./스벅_최종_통합본.twb)에서 확인할 수 있습니다. 브라우저에서 먼저 결과를 검토하려면 [docs/README.md](./docs/README.md)의 public review 경로를 따라가면 됩니다.
 
 ### Additional Dashboard View
 
@@ -178,8 +180,7 @@
 
 ## Repository Review Guide
 
-공개 저장소에서는 원본 Kaggle CSV를 포함하지 않습니다.  
-대신 아래 산출물을 통해 분석 구조, 모델링 흐름, 대시보드 결과를 확인할 수 있습니다.
+공개 저장소에서는 원본 Kaggle CSV를 포함하지 않습니다. 대신 아래 산출물을 통해 분석 구조, 모델링 흐름, 대시보드 결과를 확인할 수 있습니다.
 
 1. [Reproducibility & Validation Guide](./docs/reproducibility_and_validation.md)에서 데이터 준비와 검증 포인트를 확인합니다.
 2. [analysis/notebooks/](./analysis/notebooks/)에서 `00 → 01 → 02 → 03 → 04` 흐름을 순서대로 확인합니다.
@@ -194,67 +195,55 @@
 ```bash
 python run_pipeline.py --clear-artifacts --stop-on-error
 ```
+
 - run_pipeline.py는 원본 노트북을 수정하지 않고 실행본과 로그를 artifacts/에 저장합니다.
-- 자세한 실행 옵션과 구조 설명은 AUTOMATION_GUIDE.md 에서 확인할 수 있습니다.
+- 자세한 실행 옵션과 구조 설명은 [AUTOMATION_GUIDE.md](./AUTOMATION_GUIDE.md)에서 확인할 수 있습니다.
 - 공개 검증 범위, CI 명령, 원본 데이터 경계는 [VERIFY.md](./VERIFY.md)에 정리했습니다.
 
 ## Notebook Pipeline
-1. pip install -r requirements.txt
-2. data/ 폴더에 CSV 3개 배치
-3. analysis/notebooks/00_데이터_확인.ipynb
-4. analysis/notebooks/01_데이터_전처리.ipynb
-5. analysis/notebooks/02_데이터_조인.ipynb
-6. analysis/notebooks/03_EDA_이상치_분석.ipynb
-7. analysis/notebooks/04_오퍼_추천_ML.ipynb
-8. 결과 CSV를 Tableau에서 열어 스벅_최종_통합본.twb 확인
+
+1. `pip install -r requirements.txt`
+2. `data/` 폴더에 CSV 3개 배치
+3. `analysis/notebooks/00_데이터_확인.ipynb`
+4. `analysis/notebooks/01_데이터_전처리.ipynb`
+5. `analysis/notebooks/02_데이터_조인.ipynb`
+6. `analysis/notebooks/03_EDA_이상치_분석.ipynb`
+7. `analysis/notebooks/04_오퍼_추천_ML.ipynb`
+8. 결과 CSV를 Tableau에서 열어 `스벅_최종_통합본.twb` 확인
 
 ## Data Policy
-- 원본 입력 데이터는 portfolio.csv, profile.csv, transcript.csv입니다.
+
+- 원본 입력 데이터는 `portfolio.csv`, `profile.csv`, `transcript.csv`입니다.
 - 원본 CSV는 저장소에 포함하지 않으며, 사용자는 Kaggle에서 직접 다운로드해야 합니다.
-- 생성 산출물은 portfolio_clean.csv, transcript_clean.csv, starbucks_merged.csv, offer_recommendations.csv입니다.
+- 생성 산출물은 `portfolio_clean.csv`, `transcript_clean.csv`, `starbucks_merged.csv`, `offer_recommendations.csv`입니다.
 - 데이터셋 출처: Starbucks Capstone Dataset
-- 저장소의 코드와 문서는 MIT License 를 따르며, 원본 데이터 사용 조건은 제공처 정책을 따릅니다.
+- 저장소의 코드와 문서는 [MIT License](./LICENSE)를 따르며, 원본 데이터 사용 조건은 제공처 정책을 따릅니다.
 
 ## Engineering Signals
-| Item                  | Description                                                                                                           |
-| --------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| Entry Points          | [run_pipeline.py](./run_pipeline.py), [analysis/notebooks/](./analysis/notebooks/), [스벅_최종_통합본.twb](./스벅_최종_통합본.twb) |
-| Pipeline Design       | 데이터 확인, 전처리, 조인, EDA, 모델링, 추천, Tableau 산출물 흐름으로 분리                                                                    |
-| Data Modeling         | ERD 관점으로 `Profile < Transcript > Portfolio` 관계를 정리                                                                    |
-| CRM Output            | 고객군, 오퍼, 채널, 추천 후보를 함께 보는 의사결정형 결과물 구성                                                                                |
-| Validation Design     | 시간 기반 train/test split으로 이벤트 데이터의 미래 정보 누수 완화                                                                         |
-| Public Release Policy | 원본 CSV 제외, 코드/문서/워크북/이미지만 공개                                                                                          |
 
+| Item | Description |
+| --- | --- |
+| Entry Points | [run_pipeline.py](./run_pipeline.py), [analysis/notebooks/](./analysis/notebooks/), [스벅_최종_통합본.twb](./스벅_최종_통합본.twb) |
+| Pipeline Design | 데이터 확인, 전처리, 조인, EDA, 모델링, 추천, Tableau 산출물 흐름으로 분리 |
+| Data Modeling | ERD 관점으로 `Profile < Transcript > Portfolio` 관계를 정리 |
+| CRM Output | 고객군, 오퍼, 채널, 추천 후보를 함께 보는 의사결정형 결과물 구성 |
+| Validation Design | 시간 기반 train/test split으로 이벤트 데이터의 미래 정보 누수 완화 |
+| Public Release Policy | 원본 CSV 제외, 코드/문서/워크북/이미지만 공개 |
 
 ## Limitations
+
 - 원본 데이터는 실제 Starbucks 운영 데이터가 아니라 학습용/시뮬레이션 성격의 공개 데이터셋입니다.
 - 추천 결과는 실제 캠페인 집행 결과가 아니라 데이터 기반 우선순위 후보입니다.
 - 실제 CRM 운영에서는 캠페인 비용, 고객 피로도, 재방문 주기, 개인화 정책, 개인정보 처리 기준 등이 함께 고려되어야 합니다.
 - Tableau 워크북 확인을 위해서는 로컬 Tableau 환경 또는 호환 가능한 뷰어가 필요할 수 있습니다.
 
 ## References
-## References
 
-- [One-page Summary](./docs/한페이지_요약.md)  
-  프로젝트의 문제 정의, 접근 방식, 핵심 결과, 한계를 한 페이지로 요약한 문서입니다.
-
-- [Docs Index](./docs/README.md)  
-  공개 검토 순서, 주요 이미지 자산, 관련 문서 링크를 모아둔 문서 인덱스입니다.
-
-- [Reproducibility & Validation Guide](./docs/reproducibility_and_validation.md)  
-  데이터 준비 방식, 재현 가능 범위, 모델 검증 지표와 확인 방법을 정리한 가이드입니다.
-
-- [Automation Guide](./AUTOMATION_GUIDE.md)  
-  `run_pipeline.py`를 활용해 노트북 실행 흐름을 자동화하는 방법을 설명한 문서입니다.
-
-- [Tableau Workbook](./스벅_최종_통합본.twb)  
-  고객군, 채널, 오퍼 추천 결과를 확인할 수 있는 Tableau 워크북입니다.
-
-- [Modeling Notebook](./analysis/notebooks/04_오퍼_추천_ML.ipynb)  
-  오퍼 완료 예측 모델링, AUC·Recall·Precision·F1·랭킹 지표를 확인할 수 있는 핵심 노트북입니다.
-
-- [Changelog](./CHANGELOG.md)  
-  프로젝트 변경 이력과 주요 업데이트 내용을 정리한 문서입니다.
-
-- [License](./LICENSE)  
-  저장소 코드와 문서의 라이선스 정보를 확인할 수 있습니다.
+- [One-page Summary](./docs/한페이지_요약.md)
+- [Docs Index](./docs/README.md)
+- [Reproducibility & Validation Guide](./docs/reproducibility_and_validation.md)
+- [Automation Guide](./AUTOMATION_GUIDE.md)
+- [Tableau Workbook](./스벅_최종_통합본.twb)
+- [Modeling Notebook](./analysis/notebooks/04_오퍼_추천_ML.ipynb)
+- [Changelog](./CHANGELOG.md)
+- [License](./LICENSE)
